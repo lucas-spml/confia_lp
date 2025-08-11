@@ -102,33 +102,122 @@
         radial-gradient(800px 500px at 0% 40%, rgba(234, 40, 139, .14), transparent 60%);
     }
 
+
+
+
     .hero-visual {
       position: relative;
       aspect-ratio: 1/1;
-      border-radius: 1.5rem;
+      border-radius: 50%;
+      /* lente circular */
       overflow: hidden;
-      background: radial-gradient(40% 40% at 50% 40%, rgba(0, 189, 255, .3), transparent 70%),
-        radial-gradient(20% 20% at 60% 55%, rgba(255, 255, 255, .18), transparent 60%),
-        linear-gradient(145deg, #0B1533 0%, #0E1B40 100%);
-      border: 1px solid var(--stroke);
-      box-shadow: inset 0 0 80px rgba(0, 189, 255, .15), 0 20px 60px rgba(0, 0, 0, .55);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(0, 189, 255, 0.4) 0%, rgba(0, 189, 255, 0) 60%),
+        /* reflexo central */
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 40%),
+        /* brilho interno */
+        radial-gradient(circle, #0B1533 0%, #0E1B40 80%);
+      /* fundo da lente */
+      border: 1px solid #2a2f3d;
+      /* moldura metálica */
+      box-shadow:
+        inset 0 0 60px rgba(0, 189, 255, 0.15),
+        inset 0 0 20px rgba(0, 189, 255, 0.3),
+        0 15px 40px rgba(0, 0, 0, 0.6);
+      animation: lensBreath 3s ease-in-out infinite;
     }
+
+    /* Anéis concêntricos */
+    .hero-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, transparent 60%, rgba(255, 255, 255, 0.05) 61%),
+        radial-gradient(circle, transparent 80%, rgba(255, 255, 255, 0.03) 81%);
+      background-size: cover;
+      pointer-events: none;
+    }
+
+    /* Brilho no canto (reflexo da lente) */
+    .hero-visual::after {
+      content: '';
+      position: absolute;
+      top: 15%;
+      left: 20%;
+      width: 25%;
+      height: 25%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+      border-radius: 50%;
+      filter: blur(8px);
+      pointer-events: none;
+    }
+
+    /* Núcleo pulsante com troca de cor */
+    .hero-visual .lens-core {
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: 20%;
+      height: 20%;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--pulse-color, #00bdfd) 0%, transparent 70%);
+      animation: corePulse 1.8s ease-in-out infinite, colorShift 3.6s ease-in-out infinite;
+      box-shadow: 0 0 15px var(--pulse-color, #00bdfd);
+    }
+
+    /* Animações */
+    @keyframes lensBreath {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.04);
+      }
+    }
+
+    @keyframes corePulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.4);
+        opacity: 0.5;
+      }
+    }
+
+    /* Troca gradual entre azul e rosa */
+    @keyframes colorShift {
+
+      0%,
+      100% {
+        --pulse-color: #00bdfd;
+      }
+
+      50% {
+        --pulse-color: #EA288B;
+      }
+    }
+
 
     .ring {
       position: absolute;
       inset: 16%;
       border-radius: 50%;
-      border: 2px solid rgba(0, 189, 255, .5);
-      box-shadow: 0 0 60px rgba(0, 189, 255, .4) inset;
+      border: 1px solid rgba(234, 40, 140, 0.37);
+      box-shadow: 0 0 60px rgba(234, 40, 139, .35) inset;
       animation: pulse 4s ease-in-out infinite;
     }
 
-    .ring.r2 {
-      inset: 26%;
-      border-color: rgba(234, 40, 139, .55);
-      box-shadow: 0 0 60px rgba(234, 40, 139, .35) inset;
-      animation-delay: .7s;
-    }
+
 
     @keyframes pulse {
 
@@ -143,6 +232,21 @@
         opacity: .65
       }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     .section-title {
       letter-spacing: .4px
@@ -205,7 +309,7 @@
   <header class="hero">
     <div class="container">
       <div class="row g-4 align-items-center">
-        <div class="col-lg-6">
+        <div class="col-lg-7">
           <div class="tag mb-3"><i class="bi bi-shield-check"></i> Selo de Confiança Monuv</div>
           <h1 class="display-5 fw-bold section-title">Conf.IA <i class="bi bi-shield-check"></i><br><span
               class="fw-bold" style="color:var(--primary)">Proteção contínua</span> </h1>
@@ -215,11 +319,11 @@
           </p>
           <div class="d-flex flex-wrap gap-2 mt-3">
             <a href="#sobre" class="btn btn-outline-light btn-lg"> Saiba mais</a>
-            <a href="#ativar" class="btn btn-primary btn-lg"> Ativar agora</a>
+            <a href="#ativar" class="btn btn-primary btn-lg"> Ativar gratuitamente</a>
           </div>
 
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4">
           <div class="hero-visual glow">
             <div class="ring"></div>
             <div class="ring r2"></div>
@@ -240,8 +344,9 @@
               <h3 class="m-0">O que é o <span style="color:var(--primary)">Conf.IA</span></h3>
             </div>
             <p class="muted mb-3">
-              Uma inteligência que identifica automaticamente mudanças de cena, obstruções de imagem e instabilidade de conexão, gerando
-              eventos para que a câmera seja checada, sem necessidade de vistorias manuais. 
+              Uma inteligência que identifica automaticamente mudanças de cena, obstruções de imagem e instabilidade de
+              conexão, gerando
+              eventos para que a câmera seja checada, sem necessidade de vistorias manuais.
             </p>
             <ul class="list-check list-unstyled">
               <li><i class="bi bi-check2-circle me-2"></i>Mudança de cena ou posicionamento</li>
